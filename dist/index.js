@@ -30136,7 +30136,7 @@ async function run() {
 
     core.addPath(toolPath);
   } catch (err) {
-    core.setFailed(`Action failed with error ${err}`);
+    core.setFailed(`Action failed with error ${err.message}`);
   }
 }
 
