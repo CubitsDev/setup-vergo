@@ -1,23 +1,18 @@
-# https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions
-name: 'Action JS Template'
-description: 'A simple javascript template for rapid development of GitHub actions.'
-author: 'xrkffgg'
+name: 'Setup Vergo'
+description: 'A simple action to install Vergo to the runner'
+author: 'CubitsDev'
 
 branding:
-  # https://actions-cool.github.io/github-action-branding/
-  icon: 'file'
-  color: 'blue'
+  icon: 'tag'
+  color: 'purple'
 
 inputs:
-  GITHUB_TOKEN:
-    description: Secret GitHub API token to use for making API requests.
-    default: ${{ github.token }}
+  VERSION:
+    description: Vergo Version to install
+    default: 0.30.0
     required: true
 
-#outputs:
-#  result:
-#    description: action result
 
 runs:
-  using: 'node16'
+  using: 'node20'
   main: 'dist/index.js'

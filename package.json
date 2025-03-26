@@ -1,8 +1,7 @@
 {
-  "name": "action-js-template",
+  "name": "setup-vergo",
   "version": "0.0.1",
-  "private": true,
-  "description": "A javascript template for rapid development of GitHub actions.",
+  "description": "A simple action to install Vergo to the runner",
   "main": "src/main.js",
   "scripts": {
     "package": "ncc build",
@@ -11,10 +10,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/actions-cool/action-js-template",
+    "url": "https://github.com/CubitsDev/setup-vergo",
     "branch": "main"
   },
-  "author": "xrkffgg",
+  "author": "CubitsDev",
   "license": "MIT",
   "dependencies": {
     "@actions/core": "^1.2.6",
