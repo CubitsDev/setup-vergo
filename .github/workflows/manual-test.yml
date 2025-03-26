@@ -1,0 +1,16 @@
+name: Verify Action works
+
+on: workflow_dispatch
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@main
+      - name: Vergo Install
+        uses: ./
+        with:
+          VERSION: 0.30.0
+      - name: Vergo Verify
+        run: vergo

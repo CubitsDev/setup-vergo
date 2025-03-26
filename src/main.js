@@ -1,22 +1,48 @@
 const core = require('@actions/core');
-const github = require('@actions/github');
-const { Octokit } = require('@octokit/rest');
+const tc = require('@actions/tool-cache');
 
 async function run() {
   try {
-    const ms = core.getInput('milliseconds');
-    core.debug(`Waiting ${ms} milliseconds ...`); // debug is only output if you set the secret `ACTIONS_RUNNER_DEBUG` to true
+    const vergoVersion = core.getInput('VERSION', { required: true });
+    const platform = core.platform;
+    const arch = core.arch;
 
-    core.debug(new Date().toTimeString());
-    await new Promise(resolve => {
-      setTimeout(() => resolve('done!'), 10);
-    });
-    core.debug(new Date().toTimeString());
+    checkPlatformArch(platform, arch);
 
-    core.setOutput('time', new Date().toTimeString());
-  } catch (error) {
-    core.setFailed(error.message);
+    let toolPath = tc.find('vergo', vergoVersion);
+
+    if (!toolPath) {
+      const fullyQualifiedPath = getFullFilePath(vergoVersion, platform, arch);
+
+      const vergoTarPath = await tc.downloadTool(fullyQualifiedPath);
+      const vergoPath = await tc.extractTar(vergoTarPath);
+
+      await tc.cacheDir(vergoPath, 'vergo', vergoVersion, arch);
+
+      toolPath = vergoPath;
+    }
+
+    core.addPath(toolPath);
+  } catch (err) {
+    core.setFailed(`Action failed with error ${err}`);
   }
 }
+
+const checkPlatformArch = (platform, arch) => {
+  if (platform != 'darwin' || platform != 'linux') {
+    throw new Error(`Unsupported platform, ${platform}`);
+  }
+  if (arch != 'arm64' || arch != 'x64') {
+    throw new Error(`Unsupported Arch, ${arch}`);
+  }
+};
+
+const getFullFilePath = (version, platform, arch) => {
+  if (arch == 'x64') {
+    arch = 'amd64';
+  }
+
+  return `https://github.com/sky-uk/vergo/releases/download/v${version}/vergo_v${version}_${platform}_${arch}.tar.gz`;
+};
 
 run();
