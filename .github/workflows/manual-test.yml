@@ -3,7 +3,7 @@ name: Verify Action works
 on: workflow_dispatch
 
 jobs:
-  setup:
+  local-run:
     runs-on: ubuntu-latest
     steps:
       - name: checkout
@@ -14,3 +14,10 @@ jobs:
           VERSION: 0.30.0
       - name: Vergo Verify
         run: vergo
+  repo-run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Vergo Install
+        uses: CubitsDev/setup-vergo@main
+        with:
+          VERSION: 0.30.0
