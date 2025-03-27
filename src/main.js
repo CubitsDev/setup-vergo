@@ -4,8 +4,8 @@ const tc = require('@actions/tool-cache');
 async function run() {
   try {
     const vergoVersion = core.getInput('VERSION', { required: true });
-    const platform = core.platform;
-    const arch = core.arch;
+    const platform = core.platform.platform;
+    const arch = core.platform.arch;
 
     checkPlatformArch(platform, arch);
 

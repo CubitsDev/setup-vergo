@@ -30116,8 +30116,8 @@ const tc = __nccwpck_require__(7784);
 async function run() {
   try {
     const vergoVersion = core.getInput('VERSION', { required: true });
-    const platform = core.platform;
-    const arch = core.arch;
+    const platform = core.platform.platform;
+    const arch = core.platform.arch;
 
     checkPlatformArch(platform, arch);
 
