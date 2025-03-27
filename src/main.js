@@ -29,10 +29,10 @@ async function run() {
 }
 
 const checkPlatformArch = (platform, arch) => {
-  if (platform != 'darwin' || platform != 'linux') {
+  if (!(platform == 'darwin' || platform == 'linux')) {
     throw new Error(`Unsupported platform, ${platform}`);
   }
-  if (arch != 'arm64' || arch != 'x64') {
+  if (!(arch == 'arm64' || arch == 'x64')) {
     throw new Error(`Unsupported Arch, ${arch}`);
   }
 };
